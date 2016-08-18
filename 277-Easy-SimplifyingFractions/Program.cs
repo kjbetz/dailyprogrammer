@@ -12,10 +12,13 @@ namespace ConsoleApplication
             foreach (string line in lines)
             {
                 string[] numbers = line.Split();
+                
                 if(numbers.Length == 2)
                 {
                     Fraction fraction = new Fraction(Convert.ToInt32(numbers[0]), Convert.ToInt32(numbers[1]));
+
                     Fraction reducedFraction = fraction.ReduceFraction();
+
                     Console.WriteLine("{0} {1}", reducedFraction.Numerator, reducedFraction.Denominator);
                 }
             }
