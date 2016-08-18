@@ -8,41 +8,14 @@ namespace ConsoleApplication
         public static void Main(string[] args)
         {
             string[] lines = File.ReadAllLines("input-file.txt");
-/*
-            foreach (string line in lines)
-            {
-                string[] numbers = line.Split();
-                if(numbers.Length == 2)
-                {
-                    int nominator = Convert.ToInt32(numbers[0]);
-                    int denominator = Convert.ToInt32(numbers[1]);
-                    int divisor = denominator;
 
-                    for(int i = divisor; i > 0; i--)
-                    {
-                        if (denominator % i == 0 && nominator % i == 0)
-                        {
-                            divisor = i;
-                            break;
-                        }
-                    }
-
-                    int reducedNominator = nominator / divisor;
-                    int reducedDenominator = denominator / divisor;
-
-                    Console.WriteLine("{0} {1}", reducedNominator, reducedDenominator);
-                } 
-            }
-*/
             foreach (string line in lines)
             {
                 string[] numbers = line.Split();
                 if(numbers.Length == 2)
                 {
                     Fraction fraction = new Fraction(Convert.ToInt32(numbers[0]), Convert.ToInt32(numbers[1]));
-                    Console.WriteLine(fraction.GreatestCommonDivisor());
-                    Fraction reducedFraction = new Fraction(fraction.Numerator / fraction.GreatestCommonDivisor(), fraction.Denominator / fraction.GreatestCommonDivisor());
-
+                    Fraction reducedFraction = fraction.ReduceFraction();
                     Console.WriteLine("{0} {1}", reducedFraction.Numerator, reducedFraction.Denominator);
                 }
             }
@@ -64,17 +37,21 @@ namespace ConsoleApplication
 
             public int GreatestCommonDivisor()
             {
-                int divisor = this.Denominator;
-                Console.WriteLine(divisor);
-                for (int i = divisor; i > 0; i--)
+                for (int i = this.Denominator; i > 0; i--)
                 {
-                    if (this.Denominator % i == 0 && this.Numerator == 0)
+                    if (this.Denominator % i == 0 && this.Numerator % i == 0)
                     {
-                        divisor = i;
-                        break;
+                        return i;
                     }
                 }
-                return divisor;
+
+                return 1;
+            }
+
+            public Fraction ReduceFraction()
+            {
+                int divisor = this.GreatestCommonDivisor();
+                return new Fraction(this.Numerator / divisor, this.Denominator / divisor);
             }
         }
     }
