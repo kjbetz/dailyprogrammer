@@ -35,8 +35,15 @@ namespace ConsoleApplication
         public static int Kaprekar(string line)
         {
             int kaprekar = 0;
-            int highValue = int.Parse(String.Concat(line.OrderBy(d => (int)d)));
-            int lowValue = int.Parse(String.Concat(line.OrderByDescending(d => (int)d)));
+            int value = int.Parse(line);
+
+            do
+            {
+                int highValue = int.Parse(String.Concat(value.ToString().OrderBy(d => (int)d)));
+                int lowValue = int.Parse(String.Concat(value.ToString().OrderByDescending(d => (int)d)));
+                value = highValue - lowValue;
+                kaprekar++;
+            } while (value != 6174);
 
             return kaprekar;
         }
