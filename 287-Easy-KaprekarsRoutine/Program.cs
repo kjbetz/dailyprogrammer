@@ -29,21 +29,24 @@ namespace ConsoleApplication
             foreach (string line in lines2)
             {
                 Console.WriteLine("kaprekar({0}) -> {1}", line, Kaprekar(line));
+                Console.ReadLine();
             }
         }
 
         public static int Kaprekar(string line)
         {
             int kaprekar = 0;
-            int value = int.Parse(line);
+            int initialValue = int.Parse(line);
 
             do
             {
-                int highValue = int.Parse(String.Concat(value.ToString().OrderBy(d => (int)d)));
-                int lowValue = int.Parse(String.Concat(value.ToString().OrderByDescending(d => (int)d)));
-                value = highValue - lowValue;
-                kaprekar++;
-            } while (value != 6174);
+                int highValue = int.Parse(String.Concat(initialValue.ToString().OrderByDescending(d => (int)d)));
+                int lowValue = int.Parse(String.Concat(initialValue.ToString().OrderBy(d => (int)d)));
+                
+                initialValue = highValue - lowValue; 
+                Console.WriteLine("{0} - {1} = {2}", highValue, lowValue, initialValue);
+                kaprekar++;               
+            }while (initialValue != 6174);
 
             return kaprekar;
         }
