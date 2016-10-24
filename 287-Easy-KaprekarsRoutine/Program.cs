@@ -29,7 +29,6 @@ namespace ConsoleApplication
             foreach (string line in lines2)
             {
                 Console.WriteLine("kaprekar({0}) -> {1}", line, Kaprekar(line));
-                Console.ReadLine();
             }
         }
 
@@ -37,14 +36,19 @@ namespace ConsoleApplication
         {
             int kaprekar = 0;
             int initialValue = int.Parse(line);
-
+            
             do
             {
-                int highValue = int.Parse(String.Concat(initialValue.ToString().OrderByDescending(d => (int)d)));
-                int lowValue = int.Parse(String.Concat(initialValue.ToString().OrderBy(d => (int)d)));
+                string workingValue = initialValue.ToString();
                 
+                for (int i = workingValue.Length; i < 4; i++)
+                {
+                    workingValue = "0" + workingValue;
+                }
+                
+                int highValue = int.Parse(String.Concat(workingValue.OrderByDescending(d => (int)d)));
+                int lowValue = int.Parse(String.Concat(workingValue.OrderBy(d => (int)d)));
                 initialValue = highValue - lowValue; 
-                Console.WriteLine("{0} - {1} = {2}", highValue, lowValue, initialValue);
                 kaprekar++;               
             }while (initialValue != 6174);
 
